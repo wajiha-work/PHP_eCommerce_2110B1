@@ -65,6 +65,7 @@ if (isset($_POST["btn_add_product"])) {
         }
         
     } catch (PDOException $e) {
+        $fileResult = DeleteImage($fileResult["uploadedFile"]);
         if ($e->errorInfo[1] == 1062) {
             try {
                 $stmt = $conn->prepare("SELECT product_name FROM tb_Products WHERE product_name = :product_name;");
@@ -168,11 +169,26 @@ include "../shared/Admin/head_include.php";
                                             <div class="row mb-3">
                                                 <label for="category" class="form-label col-sm-4 col-form-label">Category</label>
                                                 <div class="col-sm-8">
+                                                    <?php
+                                                        $cats = array();
+                                                        foreach ($categories as $row) {
+                                                            if(isset($_POST["category"]))
+                                                            {
+                                                                if($_POST["category"] == $row["cat_id"])
+                                                                {
+                                                                    array_push($cats, '<option value="' . $row["cat_id"] . '" selected>' . $row["cat_name"] . '</option>');
+                                                                    continue;
+                                                                }
+                                                            }
+                                                            array_push($cats, '<option value="' . $row["cat_id"] . '">' . $row["cat_name"] . '</option>');
+                                                        }
+                                                    ?>
                                                     <select id="category" name="category" class="form-select form-control">
                                                         <?php
-                                                        foreach ($categories as $row) {
-                                                            echo '<option value="' . $row["cat_id"] . '">' . $row["cat_name"] . '</option>';
-                                                        }
+                                                            foreach($cats as $row)
+                                                            {
+                                                                echo $row;
+                                                            } 
                                                         ?>
                                                     </select>
                                                 </div>

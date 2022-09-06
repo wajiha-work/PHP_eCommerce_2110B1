@@ -109,7 +109,19 @@ include "../shared/Admin/head_include.php";
                                                     <td>' . $row['cat_name'] . '</td>
                                                     <td>' . $row['sku'] . '</td>
                                                     <td>
-                                                        ACTION
+                                                          <form action="view_product.php" method="post">
+                                                            <input type="hidden" name="pid" value="' . $row['product_id'] . '">
+                                                            <button type="submit"><i class="ti-eye"></i></button>
+                                                          </form>
+
+                                                          <form action="edit_product.php" method="post">
+                                                            <input type="hidden" name="pid" value="' . $row['product_id'] . '">
+                                                            <button type="submit"><i class="ti-pencil"></i></button>
+                                                          </form>
+                                                          <form action="delete_product.php" method="post">
+                                                            <input type="hidden" name="pid" value="' . $row['product_id'] . '">
+                                                            <button type="submit"><i class="ti-trash"></i></button>
+                                                          </form>
                                                     </td>
                                                 </tr>
                                             ';
@@ -117,6 +129,8 @@ include "../shared/Admin/head_include.php";
                     ?>
                   </tbody>
                 </table>
+
+                
               </div>
             </div>
           </div>
